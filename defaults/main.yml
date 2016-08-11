@@ -1,0 +1,4 @@
+---
+devpi_server_ver: '4.1.0'
+devpi_server_bind: '0.0.0.0'
+devpi_server_port: 80
