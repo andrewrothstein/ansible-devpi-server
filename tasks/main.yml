@@ -1,4 +1,10 @@
 ---
-- name: install devpi-server
-  pip: name=devpi-server version={{devpi_server_ver}}
+- name: install python packages...
+  become: yes
+  become_user: root
+  with_items:
+    - { n: devpi-server, v: '{{devpi_server_ver}}'}
+  pip: >
+    name={{item.n}}
+    version={{item.v}}
 
