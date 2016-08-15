@@ -1,12 +1,65 @@
 ---
-- name: install python packages...
+- name: install required python packages...
   become: yes
   become_user: root
   with_items:
-    - { n: devpi-server, v: '{{devpi_server_ver}}'}
-    - { n: devpi-web, v: '{{devpi_web_ver}}'}
-    - { n: devpi-client, v: '{{devpi_client_ver}}'}
+    - { p: supervisor, v: '{{devpi_server_supervisord_ver}}'}
+    - { p: devpi-server, v: '{{devpi_server_ver}}'}
+    - { p: devpi-web, v: '{{devpi_server_web_ver}}'}
+    - { p: devpi-client, v: '{{devpi_server_client_ver}}'}
   pip: >
-    name={{item.n}}
+    name={{item.p}}
+    version={{item.v}}
+    state=present
+
+- name: install optional python packages...
+  become: yes
+  become_user: root
+  with_items: '{{devpi_server_addl_pkgs}}'
+  pip: >
+    name={{item.p}}
     version={{item.v}}
 
+- name: ensure config directory exists
+  become: yes
+  become_user: root
+  file: >-
+    path={{devpi_server_conf_dir}}
+    state=directory
+    mode=0755
+    
+- name: configurate
+  become: yes
+  become_user: root
+  command: >
+    devpi-server --port {{devpi_server_port}} --serverdir {{devpi_server_data_dir}} --gen-config
+  args:
+    chdir: '{{devpi_server_conf_dir}}'
+    creates: '{{devpi_server_conf_dir}}/gen-config'
+
+- name: ensure supervisor directory exists
+  become: yes
+  become_user: root
+  file: >-
+    path=/etc/supervisor/conf.d
+    mode=0755
+    state=directory
+
+- name: install supervisor config
+  become: yes
+  become_user: root
+  with_items:
+    - etc/supervisor/supervisord.conf
+  template: >-
+    src={{item}}.j2
+    dest=/{{item}}
+    mode=0644
+    
+- name: link devpi-server supervisord conf
+  become: yes
+  become_user: root
+  file: >-
+    src={{devpi_server_conf_dir}}/gen-config/supervisor-devpi.conf
+    dest=/etc/supervisor/conf.d/devpi.conf
+    mode=0644
+    state=link
