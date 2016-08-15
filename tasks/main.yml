@@ -4,6 +4,8 @@
   become_user: root
   with_items:
     - { n: devpi-server, v: '{{devpi_server_ver}}'}
+    - { n: devpi-web, v: '{{devpi_web_ver}}'}
+    - { n: devpi-client, v: '{{devpi_client_ver}}'}
   pip: >
     name={{item.n}}
     version={{item.v}}

@@ -2,3 +2,6 @@
 devpi_server_ver: '4.1.0'
 devpi_server_bind: '0.0.0.0'
 devpi_server_port: 80
+
+devpi_web_ver: '3.1.1'
+devpi_client_ver: '2.6.4'
