@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: devpi-server
+  role_name: devpiserver
   author: Andrew Rothstein
-  description: devpi-server + supervisor
+  description: devpiserver + supervisor
   company: BlackRock Financial Management
   license:
     - MIT

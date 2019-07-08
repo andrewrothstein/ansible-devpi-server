@@ -2,39 +2,39 @@
 - name: install required python packages...
   with_items:
     - p: supervisor
-      v: '{{devpi_server_supervisord_ver}}'
+      v: '{{devpiserver_supervisord_ver}}'
     - p: devpi-server
-      v: '{{devpi_server_ver}}'
+      v: '{{devpiserver_ver}}'
     - p: devpi-web
-      v: '{{devpi_server_web_ver}}'
+      v: '{{devpiserver_web_ver}}'
     - p: devpi-client
-      v: '{{devpi_server_client_ver}}'
+      v: '{{devpiserver_client_ver}}'
   pip:
     name: '{{ item.p }}'
     version: '{{ item.v }}'
     state: present
 
 - name: install optional python packages...
-  with_items: '{{ devpi_server_addl_pkgs }}'
+  with_items: '{{ devpiserver_addl_pkgs }}'
   pip:
     name: '{{ item.p }}'
     version: '{{ item.v }}'
 
 - name: ensure config directory exists
   file:
-    path: '{{ devpi_server_conf_dir }}'
+    path: '{{ devpiserver_conf_dir }}'
     state: directory
     mode: 0755
     
 - name: configurate
-  command: devpi-server --port {{devpi_server_port}} --serverdir {{devpi_server_data_dir}} --gen-config
+  command: devpi-server --port {{devpiserver_port}} --serverdir {{devpiserver_data_dir}} --gen-config
   args:
-    chdir: '{{ devpi_server_conf_dir }}'
-    creates: '{{ devpi_server_conf_dir }}/gen-config'
+    chdir: '{{ devpiserver_conf_dir }}'
+    creates: '{{ devpiserver_conf_dir }}/gen-config'
 
 - name: ensure supervisor directory exists
   file:
-    path: '{{ devpi_server_supervisord_confd }}'
+    path: '{{ devpiserver_supervisord_confd }}'
     mode: 0755
     state: directory
 
@@ -49,7 +49,7 @@
     
 - name: link devpi-server supervisord conf
   file:
-    src: '{{ devpi_server_conf_dir }}/gen-config/supervisor-devpi.conf'
-    dest: '{{ devpi_server_supervisord_confd }}/devpi.conf'
+    src: '{{ devpiserver_conf_dir }}/gen-config/supervisor-devpi.conf'
+    dest: '{{ devpiserver_supervisord_confd }}/devpi.conf'
     mode: 0644
     state: link

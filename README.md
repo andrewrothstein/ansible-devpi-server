@@ -1,6 +1,6 @@
-andrewrothstein.devpi-server
+andrewrothstein.devpiserver
 =========
-[![Build Status](https://travis-ci.org/andrewrothstein/ansible-devpi-server.svg?branch=master)](https://travis-ci.org/andrewrothstein/ansible-devpi-server)
+[![Build Status](https://travis-ci.org/andrewrothstein/ansible-devpiserver.svg?branch=master)](https://travis-ci.org/andrewrothstein/ansible-devpiserver)
 
 Installs a [devpi](https://devpi.net/docs/devpi/devpi/stable/%2Bd/index.html) server.
 
@@ -25,7 +25,7 @@ Example Playbook
 ```yml
 - hosts: servers
   roles:
-    - andrewrothstein.devpi-server
+    - andrewrothstein.devpiserver
 ```
 
 License
