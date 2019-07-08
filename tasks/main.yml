@@ -2,13 +2,13 @@
 - name: install required python packages...
   with_items:
     - p: supervisor
-      v: '{{devpiserver_supervisord_ver}}'
+      v: '{{ devpiserver_supervisord_ver }}'
     - p: devpi-server
-      v: '{{devpiserver_ver}}'
+      v: '{{ devpiserver_ver }}'
     - p: devpi-web
-      v: '{{devpiserver_web_ver}}'
+      v: '{{ devpiserver_web_ver }}'
     - p: devpi-client
-      v: '{{devpiserver_client_ver}}'
+      v: '{{ devpiserver_client_ver }}'
   pip:
     name: '{{ item.p }}'
     version: '{{ item.v }}'
@@ -25,9 +25,9 @@
     path: '{{ devpiserver_conf_dir }}'
     state: directory
     mode: 0755
-    
+
 - name: configurate
-  command: devpi-server --port {{devpiserver_port}} --serverdir {{devpiserver_data_dir}} --gen-config
+  command: devpi-server --port {{ devpiserver_port }} --serverdir {{ devpiserver_data_dir }} --gen-config
   args:
     chdir: '{{ devpiserver_conf_dir }}'
     creates: '{{ devpiserver_conf_dir }}/gen-config'
@@ -46,7 +46,7 @@
     src: '{{ item.f }}.j2'
     dest: '{{ item.d }}/{{ item.f }}'
     mode: 0644
-    
+
 - name: link devpi-server supervisord conf
   file:
     src: '{{ devpiserver_conf_dir }}/gen-config/supervisor-devpi.conf'
