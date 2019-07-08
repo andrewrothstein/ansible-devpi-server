@@ -1,5 +1,5 @@
 ---
-devpi_server_ver: '4.1.0'
+devpi_server_ver: '5.0.0'
 devpi_server_port: 80
 devpi_server_conf_dir: /etc/devpi-server
 devpi_server_data_dir: /var/devpi-server/data
@@ -7,10 +7,12 @@ devpi_server_log_dir: /var/log/devpi-server
 devpi_server_user: root
 devpi_server_password: d5d00e5c-62f9-11e6-bcc2-989096e41e7c
 devpi_server_supervisord_socket: /var/run/supervisor.sock
+devpi_server_supervisord_confd: /etc/supervisor/conf.d
 
-devpi_server_supervisord_ver: '3.3.1'
-devpi_server_web_ver: '3.1.1'
-devpi_server_client_ver: '2.6.4'
+devpi_server_supervisord_ver: '4.0.3'
+devpi_server_web_ver: '3.5.2'
+devpi_server_client_ver: '5.0.0'
 devpi_server_addl_pkgs:
-  - { p: devpi-ldap, v: '1.2.0' }
+  - p: devpi-ldap
+    v: '1.2.2'
 
